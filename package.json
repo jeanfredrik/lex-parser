@@ -1,0 +1,13 @@
+{
+  "name": "lex-parser",
+  "version": "1.0.0",
+  "main": "dist/lex.js",
+  "author": "jeanfredrik <jeanfredrik@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "nearleyc ./src/lex.ne > ./dist/lex.js"
+  },
+  "devDependencies": {
+    "nearley": "^2.10.1"
+  }
+}
