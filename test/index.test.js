@@ -12,7 +12,27 @@ describe('parse', () => {
       CVC
     `;
     const output = parser.parse(input);
-    expectedOutput = [{}];
+    const expectedOutput = [
+      {
+        statements: [
+          {
+            identifier: 'C',
+            items: ['p', 'b', 'm'],
+            type: 'Definition',
+          },
+          {
+            identifier: 'V',
+            items: ['a'],
+            type: 'Definition',
+          },
+          {
+            pattern: 'CVC',
+            type: 'Pattern',
+          },
+        ],
+        type: 'Main',
+      },
+    ];
     expect(output.length).toBe(1);
     expect(output).toEqual(expectedOutput);
   });
