@@ -1,5 +1,5 @@
-var grammar = require("./lex.js");
-var { Parser } = require("nearley");
+const grammar = require('./lex.js');
+const { Parser } = require('nearley');
 
 function parser() {
   return new Parser(grammar.ParserRules, grammar.ParserStart);
