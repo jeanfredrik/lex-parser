@@ -8,7 +8,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "nearleyc ./src/lex.ne > ./dist/lex.js",
+    "prepublish": "nearleyc ./src/lex.ne > ./dist/lex.js",
     "test": "jest",
     "start": "jest --watchAll"
   },
