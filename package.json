@@ -4,6 +4,9 @@
   "main": "dist/index.js",
   "author": "jeanfredrik <jeanfredrik@gmail.com>",
   "license": "MIT",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "nearleyc ./src/lex.ne > ./dist/lex.js",
     "test": "jest",
