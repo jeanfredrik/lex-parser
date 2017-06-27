@@ -1,5 +1,5 @@
 {
-  "name": "lex-parser",
+  "name": "@jeanfredrik/lex-parser",
   "version": "1.0.0",
   "main": "dist/index.js",
   "author": "jeanfredrik <jeanfredrik@gmail.com>",
