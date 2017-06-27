@@ -5,9 +5,15 @@
   "author": "jeanfredrik <jeanfredrik@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "nearleyc ./src/lex.ne > ./dist/lex.js"
+    "build": "nearleyc ./src/lex.ne > ./dist/lex.js",
+    "test": "jest",
+    "start": "jest --watchAll"
   },
   "dependencies": {
     "nearley": "^2.10.1"
+  },
+  "devDependencies": {
+    "common-tags": "^1.4.0",
+    "jest": "^20.0.4"
   }
 }
