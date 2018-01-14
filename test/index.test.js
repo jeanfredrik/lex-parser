@@ -12,23 +12,134 @@ describe('parse', () => {
     const output = parser.parse(input)
     const expectedOutput = [
       {
+        type: 'Main',
         statements: [
           {
+            type: 'Definition',
             identifier: 'C',
             items: ['p', 'b', 'm'],
-            type: 'Definition',
           },
           {
+            type: 'Definition',
             identifier: 'V',
             items: ['a'],
-            type: 'Definition',
           },
           {
-            pattern: 'CVC',
             type: 'Pattern',
+            weight: 1,
+            parts: [
+              {
+                type: 'PatternFragment',
+                grapheme: 'CVC',
+              },
+            ],
           },
         ],
+      },
+    ]
+    expect(output).toEqual(expectedOutput)
+    expect(output.length).toBe(1)
+  })
+  it('handles subpatterns', () => {
+    const input = stripIndent`
+      CV(CV)
+    `
+    const output = parser.parse(input)
+    const expectedOutput = [
+      {
         type: 'Main',
+        statements: [
+          {
+            type: 'Pattern',
+            weight: 1,
+            parts: [
+              {
+                type: 'PatternFragment',
+                grapheme: 'CV',
+              },
+              {
+                type: 'Pattern',
+                weight: 0.5,
+                parts: [
+                  {
+                    type: 'PatternFragment',
+                    grapheme: 'CV',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ]
+    expect(output.length).toBe(1)
+    expect(output).toEqual(expectedOutput)
+  })
+  it('handles patterns with weight', () => {
+    const input = stripIndent`
+      CV(CV)*5
+    `
+    const output = parser.parse(input)
+    const expectedOutput = [
+      {
+        type: 'Main',
+        statements: [
+          {
+            type: 'Pattern',
+            weight: 5,
+            parts: [
+              {
+                type: 'PatternFragment',
+                grapheme: 'CV',
+              },
+              {
+                type: 'Pattern',
+                weight: 0.5,
+                parts: [
+                  {
+                    type: 'PatternFragment',
+                    grapheme: 'CV',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ]
+    expect(output.length).toBe(1)
+    expect(output).toEqual(expectedOutput)
+  })
+  it('handles subpatterns with weight', () => {
+    const input = stripIndent`
+      CV(CV * .75)
+    `
+    const output = parser.parse(input)
+    const expectedOutput = [
+      {
+        type: 'Main',
+        statements: [
+          {
+            type: 'Pattern',
+            weight: 1,
+            parts: [
+              {
+                type: 'PatternFragment',
+                grapheme: 'CV',
+              },
+              {
+                type: 'Pattern',
+                weight: 0.75,
+                parts: [
+                  {
+                    type: 'PatternFragment',
+                    grapheme: 'CV',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
       },
     ]
     expect(output.length).toBe(1)
