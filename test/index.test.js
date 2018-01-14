@@ -1,7 +1,5 @@
-const parser = require('../dist');
-const {
-  stripIndent,
-} = require('common-tags');
+const parser = require('../dist')
+const { stripIndent } = require('common-tags')
 
 describe('parse', () => {
   it('works', () => {
@@ -10,8 +8,8 @@ describe('parse', () => {
       V=a
 
       CVC
-    `;
-    const output = parser.parse(input);
+    `
+    const output = parser.parse(input)
     const expectedOutput = [
       {
         statements: [
@@ -32,8 +30,8 @@ describe('parse', () => {
         ],
         type: 'Main',
       },
-    ];
-    expect(output.length).toBe(1);
-    expect(output).toEqual(expectedOutput);
-  });
-});
+    ]
+    expect(output.length).toBe(1)
+    expect(output).toEqual(expectedOutput)
+  })
+})
