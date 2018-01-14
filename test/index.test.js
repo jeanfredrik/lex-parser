@@ -17,12 +17,18 @@ describe('parse', () => {
           {
             type: 'Definition',
             identifier: 'C',
-            items: ['p', 'b', 'm'],
+            symbols: [
+              { type: 'DefinitionSymbol', grapheme: 'p' },
+              { type: 'DefinitionSymbol', grapheme: 'b' },
+              { type: 'DefinitionSymbol', grapheme: 'm' },
+            ],
           },
           {
             type: 'Definition',
             identifier: 'V',
-            items: ['a'],
+            symbols: [
+              { type: 'DefinitionSymbol', grapheme: 'a' },
+            ],
           },
           {
             type: 'Pattern',
@@ -163,5 +169,93 @@ describe('parse', () => {
     ]
     expect(output.length).toBe(1)
     expect(output).toEqual(expectedOutput)
+  })
+  it('handles graphemes with weights', () => {
+    const input = stripIndent`
+      C=a*2, b, c/4
+    `
+    const output = parser.parse(input)
+    const expectedOutput = [
+      {
+        type: 'Main',
+        statements: [
+          {
+            type: 'Definition',
+            identifier: 'C',
+            symbols: [
+              {
+                type: 'DefinitionSymbol',
+                grapheme: 'a',
+                weight: 2,
+              },
+              { type: 'DefinitionSymbol', grapheme: 'b' },
+              {
+                type: 'DefinitionSymbol',
+                grapheme: 'c',
+                weight: 0.25,
+              },
+            ],
+          },
+        ],
+      },
+    ]
+    expect(output).toEqual(expectedOutput)
+    expect(output.length).toBe(1)
+  })
+  it('handles empty graphemes', () => {
+    const input = stripIndent`
+      C=a,
+    `
+    const output = parser.parse(input)
+    const expectedOutput = [
+      {
+        type: 'Main',
+        statements: [
+          {
+            type: 'Definition',
+            identifier: 'C',
+            symbols: [
+              {
+                type: 'DefinitionSymbol',
+                grapheme: 'a',
+              },
+              { type: 'DefinitionSymbol', grapheme: '' },
+            ],
+          },
+        ],
+      },
+    ]
+    expect(output).toEqual(expectedOutput)
+    expect(output.length).toBe(1)
+  })
+  it('handles empty graphemes with weight', () => {
+    const input = stripIndent`
+      C=a,*5
+    `
+    const output = parser.parse(input)
+    const expectedOutput = [
+      {
+        type: 'Main',
+        statements: [
+          {
+            type: 'Definition',
+            identifier: 'C',
+            symbols: [
+              {
+                type: 'DefinitionSymbol',
+                grapheme: 'a',
+              },
+              {
+                type: 'DefinitionSymbol',
+                grapheme: '',
+                weight: 5,
+              },
+            ],
+          },
+        ],
+      },
+    ]
+    expect(output).toEqual(expectedOutput)
+    expect(output.length).toBe(1)
   })
 })
