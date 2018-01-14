@@ -8,7 +8,9 @@
     "dist"
   ],
   "scripts": {
-    "prepublish": "nearleyc ./src/lex.ne > ./dist/lex.js",
+    "grammar": "nearleyc ./src/lex.ne > ./dist/lex.js",
+    "docs": "nearley-railroad ./src/lex.ne -o ./docs/lex.html",
+    "prepublish": "npm run grammar && npm run docs",
     "test": "jest",
     "start": "jest --watchAll"
   },
