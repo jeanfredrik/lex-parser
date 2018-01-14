@@ -10,6 +10,16 @@ Main ->
 Statement ->
   Definition {% id %}
   | PatternWithWeight {% id %}
+  | Comment {% id %}
+
+Comment ->
+  "#" [^\n\r]:*
+  {%
+    ([, comment]) => ({
+      type: 'Comment',
+      comment,
+    })
+  %}
 
 Definition ->
   Identifier _ "=" DefList
