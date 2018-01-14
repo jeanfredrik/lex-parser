@@ -8,9 +8,9 @@
     "dist"
   ],
   "scripts": {
-    "grammar": "nearleyc ./src/lex.ne | babel -o ./dist/lex.js",
+    "grammar": "nearleyc ./src/lex.ne | babel --filename ./src/lex.ne --out-file ./dist/lex.js",
     "docs": "nearley-railroad ./src/lex.ne -o ./docs/lex.html",
-    "build": "npm run grammar && babel src -d dist",
+    "build": "npm run grammar && babel src --out-dir dist",
     "prepare": "npm run build && npm run docs",
     "test": "jest",
     "start": "jest --watchAll"
