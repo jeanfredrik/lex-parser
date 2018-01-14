@@ -145,4 +145,23 @@ describe('parse', () => {
     expect(output.length).toBe(1)
     expect(output).toEqual(expectedOutput)
   })
+  it('handles whole-line comments', () => {
+    const input = stripIndent`
+      # abc
+    `
+    const output = parser.parse(input)
+    const expectedOutput = [
+      {
+        type: 'Main',
+        statements: [
+          {
+            type: 'Comment',
+            comment: ' abc',
+          },
+        ],
+      },
+    ]
+    expect(output.length).toBe(1)
+    expect(output).toEqual(expectedOutput)
+  })
 })
