@@ -24,10 +24,10 @@ Comment ->
 Definition ->
   Identifier _ "=" DefList
   {%
-    ([identifier, , , items]) => ({
+    ([identifier, , , symbols]) => ({
       type: 'Definition',
       identifier,
-      items,
+      symbols,
     })
   %}
 
@@ -40,15 +40,47 @@ DefList ->
   %}
 
 DefListItem ->
-  (_ Grapheme _) {% d => d[0][1] %}
-  | _ {% d => '' %}
+  # "a"
+  _ Grapheme _
+  {%
+    ([, grapheme, ]) => ({
+      type: 'DefinitionSymbol',
+      grapheme,
+    })
+  %}
+  # "a*5"
+  | _ Grapheme _ Weight _
+  {%
+    ([, grapheme, , weight, ]) => ({
+      type: 'DefinitionSymbol',
+      weight,
+      grapheme,
+    })
+  %}
+  # ""
+  | _
+  {%
+    () => ({
+      type: 'DefinitionSymbol',
+      grapheme: '',
+    })
+  %}
+  # "*5"
+  | _ Weight
+  {%
+    ([, weight]) => ({
+      type: 'DefinitionSymbol',
+      weight,
+      grapheme: '',
+    })
+  %}
 
 PatternWithWeight ->
   Pattern
   {%
     ([pattern]) => Object.assign({weight: 1}, pattern)
   %}
-  | Pattern _ PatternWeight
+  | Pattern _ Weight
   {%
     ([pattern, , weight]) => Object.assign({}, pattern, {
       weight,
@@ -94,14 +126,14 @@ SubPattern ->
   {%
     ([, pattern, ]) => Object.assign({weight: .5}, pattern)
   %}
-  | "(" Pattern _ PatternWeight ")"
+  | "(" Pattern _ Weight ")"
   {%
     ([, pattern, , weight, ]) => Object.assign({}, pattern, {
       weight,
     })
   %}
 
-PatternWeight ->
+Weight ->
   "*" _ Float
   {%
     ([, , value]) => value
