@@ -1,6 +1,6 @@
 {
   "name": "@jeanfredrik/lex-parser",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "main": "dist/index.js",
   "author": "jeanfredrik <jeanfredrik@gmail.com>",
   "license": "MIT",
