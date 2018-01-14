@@ -17,7 +17,7 @@ Comment ->
   {%
     ([, comment]) => ({
       type: 'Comment',
-      comment,
+      comment: comment.join(''),
     })
   %}
 
