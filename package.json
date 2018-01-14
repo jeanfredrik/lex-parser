@@ -10,7 +10,8 @@
   "scripts": {
     "grammar": "nearleyc ./src/lex.ne > ./dist/lex.js",
     "docs": "nearley-railroad ./src/lex.ne -o ./docs/lex.html",
-    "prepare": "npm run grammar && npm run docs",
+    "build": "npm run grammar && babel src -d dist",
+    "prepare": "npm run build && npm run docs",
     "test": "jest",
     "start": "jest --watchAll"
   },
